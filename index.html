@@ -199,6 +199,33 @@
   document.getElementById("className").value = "";
   document.getElementById("classDay").value = "";
   document.getElementById("classTime").value = "";
+}function addDance() {
+  const name = document.getElementById("danceName").value.trim();
+  const notes = document.getElementById("danceNotes").value.trim();
+  const video = document.getElementById("danceVideo").value.trim();
+
+  if (!name) {
+    alert("Please enter a dance name.");
+    return;
+  }
+
+  const item = document.createElement("li");
+  item.textContent = name + " — " + notes;
+
+  if (video) {
+    const link = document.createElement("a");
+    link.href = video;
+    link.textContent = " Watch practice video";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    item.appendChild(link);
+  }
+
+  document.getElementById("danceList").appendChild(item);
+
+  document.getElementById("danceName").value = "";
+  document.getElementById("danceNotes").value = "";
+  document.getElementById("danceVideo").value = "";
 }
   </script>
 </body>
