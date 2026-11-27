@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Choreography Library</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .dance-item {
+      background: var(--white);
+      padding: 18px;
+      margin-top: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .dance-item strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+    }
+    .dance-item a {
+      color: var(--brown);
+    }
+    .dance-item button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">02 / Create and collect</p>
+    <h2>Choreography Library</h2>
+    <p class="intro">Keep your routines, creative ideas, practice notes, and video references together in one place.</p>
+
+    <section class="panel">
+      <h3>Add a Dance</h3>
+      <form id="danceForm">
+        <label for="danceName">Dance or routine name</label>
+        <input id="danceName" placeholder="Example: Autumn Waltz" required>
+
+        <label for="danceStyle">Dance style</label>
+        <input id="danceStyle" placeholder="Example: Contemporary">
+
+        <label for="danceNotes">Choreography notes</label>
+        <textarea id="danceNotes" placeholder="Add steps, formations, counts, or ideas..."></textarea>
+
+        <label for="danceVideo">Video link (optional)</label>
+        <input id="danceVideo" type="url" placeholder="https://example.com">
+
+        <button type="submit">Save Dance</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Your Dance Collection</h3>
+      <div id="danceList">
+        <p>No dances added yet. Your collection will appear here.</p>
+      </div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("danceForm");
+    const danceList = document.getElementById("danceList");
+    let dances = JSON.parse(localStorage.getItem("moveDanceChoreography") || "[]");
+
+    function displayDances() {
+      danceList.innerHTML = "";
+
+      if (dances.length === 0) {
+        danceList.innerHTML = "<p>No dances added yet. Your collection will appear here.</p>";
+        return;
+      }
+
+      dances.forEach((dance, index) => {
+        const card = document.createElement("div");
+        card.className = "dance-item";
+
+        const title = document.createElement("strong");
+        title.textContent = dance.name;
+
+        const style = document.createElement("p");
+        style.textContent = dance.style || "Dance style not specified";
+
+        const notes = document.createElement("p");
+        notes.textContent = dance.notes || "No notes added.";
+
+        card.append(title, style, notes);
+
+        if (dance.video) {
+          const link = document.createElement("a");
+          link.href = dance.video;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "Open video reference";
+          card.appendChild(link);
+        }
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          dances.splice(index, 1);
+          saveDances();
+        });
+
+        card.appendChild(remove);
+        danceList.appendChild(card);
+      });
+    }
+
+    function saveDances() {
+      localStorage.setItem("moveDanceChoreography", JSON.stringify(dances));
+      displayDances();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      dances.push({
+        name: document.getElementById("danceName").value.trim(),
+        style: document.getElementById("danceStyle").value.trim(),
+        notes: document.getElementById("danceNotes").value.trim(),
+        video: document.getElementById("danceVideo").value.trim()
+      });
+
+      saveDances();
+      form.reset();
+    });
+
+    displayDances();
+  </script>
+</body>
+</html>
