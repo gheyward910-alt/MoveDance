@@ -87,12 +87,18 @@
       <strong>Plan together. Practice with purpose. Dance with confidence.</strong>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h3>📅 Class Schedule</h3>
-        <p>Keep track of upcoming studio classes and rehearsals.</p>
-        <p><em>Your class schedule will appear here.</em></p>
-      </article>
+ <article class="card">
+  <h3>📅 Class Schedule</h3>
+  <p>Add your upcoming dance classes.</p>
+
+  <input id="className" placeholder="Class name">
+  <input id="classDay" placeholder="Day (example: Monday)">
+  <input id="classTime" placeholder="Time (example: 4:00 PM)">
+
+  <button onclick="addClass()">Add Class</button>
+
+  <ul id="classList"></ul>
+</article>
 
       <article class="card">
         <h3>🎵 Choreography Library</h3>
@@ -149,7 +155,25 @@
       item.textContent = value;
       document.getElementById("noteList").appendChild(item);
       field.value = "";
-    }
+    }function addClass() {
+  const name = document.getElementById("className").value.trim();
+  const day = document.getElementById("classDay").value.trim();
+  const time = document.getElementById("classTime").value.trim();
+
+  if (!name || !day || !time) {
+    alert("Please fill in all three class details.");
+    return;
+  }
+
+  const item = document.createElement("li");
+  item.textContent = name + " — " + day + " — " + time;
+
+  document.getElementById("classList").appendChild(item);
+
+  document.getElementById("className").value = "";
+  document.getElementById("classDay").value = "";
+  document.getElementById("classTime").value = "";
+}
   </script>
 </body>
 </html>
