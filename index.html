@@ -150,83 +150,71 @@
 
   <footer>MoveDance · Made for every dance journey</footer>
 
-  <script>
-    function addNote() {
-      const field = document.getElementById("note");
-      const value = field.value.trim();
-      if (!value) {
-        alert("Please write a note first.");
-        return;
-      }
-      const item = document.createElement("li");
-      item.textContent = value;
-      document.getElementById("noteList").appendChild(item);
-      field.value = "";
-    function addDance() {
-  const name = document.getElementById("danceName").value.trim();
-  const notes = document.getElementById("danceNotes").value.trim();
-  const video = document.getElementById("danceVideo").value.trim();
 
-  if (!name) {
-    alert("Please enter a dance name.");
-    return;
+<script>
+  function addNote() {
+    const field = document.getElementById("note");
+    const value = field.value.trim();
+
+    if (!value) {
+      alert("Please write a note first.");
+      return;
+    }
+
+    const item = document.createElement("li");
+    item.textContent = value;
+    document.getElementById("noteList").appendChild(item);
+    field.value = "";
   }
 
-  const item = document.createElement("li");
-  item.textContent = name + " — " + notes;
+  function addClass() {
+    const name = document.getElementById("className").value.trim();
+    const day = document.getElementById("classDay").value.trim();
+    const time = document.getElementById("classTime").value.trim();
 
-  if (video) {
-    const link = document.createElement("a");
-    link.href = video;
-    link.textContent = " Watch practice video";
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    item.appendChild(link);
+    if (!name || !day || !time) {
+      alert("Please fill in all three class details.");
+      return;
+    }
+
+    const item = document.createElement("li");
+    item.textContent = name + " — " + day + " — " + time;
+    document.getElementById("classList").appendChild(item);
+
+    document.getElementById("className").value = "";
+    document.getElementById("classDay").value = "";
+    document.getElementById("classTime").value = "";
   }
 
-  document.getElementById("danceList").appendChild(item);
+  function addDance() {
+    const name = document.getElementById("danceName").value.trim();
+    const notes = document.getElementById("danceNotes").value.trim();
+    const video = document.getElementById("danceVideo").value.trim();
 
-  document.getElementById("danceName").value = "";
-  document.getElementById("danceNotes").value = "";
-  document.getElementById("danceVideo").value = "";
-}
+    if (!name) {
+      alert("Please enter a dance name.");
+      return;
+    }
 
-  const item = document.createElement("li");
-  item.textContent = name + " — " + day + " — " + time;
+    const item = document.createElement("li");
+    item.textContent = name + " — " + notes;
 
-  document.getElementById("classList").appendChild(item);
+    if (video) {
+      const link = document.createElement("a");
+      link.href = video;
+      link.textContent = " Watch practice video";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      item.appendChild(link);
+    }
 
-  document.getElementById("className").value = "";
-  document.getElementById("classDay").value = "";
-  document.getElementById("classTime").value = "";
-}function addDance() {
-  const name = document.getElementById("danceName").value.trim();
-  const notes = document.getElementById("danceNotes").value.trim();
-  const video = document.getElementById("danceVideo").value.trim();
+    document.getElementById("danceList").appendChild(item);
 
-  if (!name) {
-    alert("Please enter a dance name.");
-    return;
+    document.getElementById("danceName").value = "";
+    document.getElementById("danceNotes").value = "";
+    document.getElementById("danceVideo").value = "";
   }
+</script>
 
-  const item = document.createElement("li");
-  item.textContent = name + " — " + notes;
-
-  if (video) {
-    const link = document.createElement("a");
-    link.href = video;
-    link.textContent = " Watch practice video";
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    item.appendChild(link);
-  }
-
-  document.getElementById("danceList").appendChild(item);
-
-  document.getElementById("danceName").value = "";
-  document.getElementById("danceNotes").value = "";
-  document.getElementById("danceVideo").value = "";
-}
-  </script>
 </body>
 </html>
