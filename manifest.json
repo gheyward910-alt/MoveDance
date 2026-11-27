@@ -1,0 +1,10 @@
+{
+  "name": "MoveDance Studio Hub",
+  "short_name": "MoveDance",
+  "description": "Your dance studio planning space.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f1e9",
+  "theme_color": "#f5f1e9",
+  "icons": []
+}
