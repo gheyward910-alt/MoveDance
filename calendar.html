@@ -149,7 +149,7 @@
       const matching = events.filter(event => event.date === date);
       html += `<div class="day ${isToday ? 'today' : ''}">${day}`;
 matching.forEach(event => {
-  html += `<div class="event">${escapeText(event.title)}</div>`;
+  html += `<div class="event">${escapeText(event.title)} ${escapeText(formatTime(event.time))}</div>`;
 });
 
 const weekday = new Date(year, month, day)
