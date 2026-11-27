@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+    }
+
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 55px 6%;
+    }
+
+    .welcome {
+      padding: 35px 0 45px;
+      border-bottom: 1px solid var(--beige);
+      margin-bottom: 35px;
+    }
+
+    .welcome .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+
+    .welcome h2 {
+      font-size: clamp(45px, 7vw, 72px);
+      line-height: 1;
+      font-style: italic;
+      margin: 15px 0;
+    }
+
+    .welcome p {
+      line-height: 1.8;
+      max-width: 520px;
+    }
+
+    .section-heading {
+      font-size: 32px;
+      margin: 35px 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      display: block;
+      background: var(--beige);
+      padding: 25px;
+      min-height: 175px;
+      color: var(--brown);
+      text-decoration: none;
+      transition: transform .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card span {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--taupe);
+    }
+
+    .card h3 {
+      font-size: 27px;
+      margin: 18px 0 8px;
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 35px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 20px 5%; }
+      nav a { margin-left: 0; margin-right: 14px; }
+      main { padding: 30px 5%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <p class="eyebrow">Your studio, beautifully organized</p>
+      <h2>Welcome to<br>your dance space.</h2>
+      <p>Keep your classes, choreography, competitions, and studio plans together in one calm and organized place.</p>
+    </section>
+
+    <h2 class="section-heading">Your Studio</h2>
+
+    <section class="grid">
+      <a class="card" href="schedule.html">
+        <span>01 / CLASSES</span>
+        <h3>Class Schedule</h3>
+        <p>Keep track of upcoming classes and studio times.</p>
+      </a>
+
+      <a class="card" href="choreography.html">
+        <span>02 / MOVEMENT</span>
+        <h3>Choreography Library</h3>
+        <p>Organize dances, routines, and practice notes.</p>
+      </a>
+
+      <a class="card" href="competitions.html">
+        <span>03 / EVENTS</span>
+        <h3>Competition Planner</h3>
+        <p>Keep competition details and important dates together.</p>
+      </a>
+
+      <a class="card" href="costumes.html">
+        <span>04 / WARDROBE</span>
+        <h3>Costumes & Packing</h3>
+        <p>Plan costumes and organize packing lists.</p>
+      </a>
+
+      <a class="card" href="attendance.html">
+        <span>05 / STUDIO</span>
+        <h3>Attendance Tracker</h3>
+        <p>Keep a record of class attendance.</p>
+      </a>
+
+      <a class="card" href="announcements.html">
+        <span>06 / UPDATES</span>
+        <h3>Studio Announcements</h3>
+        <p>Keep important studio updates in one place.</p>
+      </a>
+
+      <a class="card" href="practice.html">
+        <span>07 / PERSONAL</span>
+        <h3>Practice Notes</h3>
+        <p>Save reminders and personal practice notes.</p>
+      </a>
+    </section>
+
+    <a class="back-link" href="index.html">← Return to MoveDance home</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+</body>
+</html>
