@@ -24,7 +24,8 @@
       color: var(--brown);
       font-family: 'Manrope', Arial, sans-serif;
     }
-    header {
+    header { justify-content: space-between;
+flex-wrap: wrap;
       padding: 25px 7%;
       border-bottom: 1px solid var(--beige);
       display: flex;
@@ -34,7 +35,21 @@
     header img { width: 55px; height: 55px; object-fit: contain; }
     h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; }
     h1 { margin: 0; font-size: 36px; }
-    header p { margin: 3px 0 0; color: var(--taupe); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+   header p {
+  margin: 3px 0 0;
+  color: var(--taupe);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dashboard-link {
+  color: var(--brown);
+  text-decoration: none;
+  border: 1px solid var(--taupe);
+  padding: 10px 16px;
+  font-size: 13px;
+}
     main { max-width: 1100px; margin: auto; padding: 40px 6%; }
     .top { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
     .top h2 { font-size: 42px; margin: 0; }
@@ -79,8 +94,8 @@
     <h1>MoveDance</h1>
     <p>Rehearsal Calendar</p>
   </div>
+  <a class="dashboard-link" href="dashboard.html">Dashboard</a>
 </header>
-
 <main>
   <div class="top">
     <h2>Your Studio Calendar</h2>
@@ -165,7 +180,7 @@ const matchingClasses = classes.filter(item => {
 });
 
 matchingClasses.forEach(item => {
-  html += `<div class="event">Class: ${escapeText(item.name)} ${escapeText(item.time)}</div>`;
+  html += `<div class="event">Class: ${escapeText(item.name)} ${escapeText(formatTime(item.time))}</div>`;
 });
 
 html += '</div>';
@@ -217,13 +232,39 @@ html += '</div>';
     }
 
     list.innerHTML = events.map((event, index) => {
-      const googleDate = event.date.replace(/-/g, '') +
-        (event.time ? 'T' + event.time.replace(/:/g, '') + '00' : '');
-      const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-        '&text=' + encodeURIComponent(event.title) +
-        '&dates=' + encodeURIComponent(googleDate + '/' + googleDate) +
-        '&details=' + encodeURIComponent('MoveDance ' + event.type);
+ let googleDates;
 
+if (event.time) {
+  const [hours, minutes] = event.time.split(":").map(Number);
+  const start = new Date(event.date + "T00:00:00");
+  start.setHours(hours, minutes, 0, 0);
+  const end = new Date(start.getTime() + 60 * 60 * 1000);
+
+  function googleDateTime(date) {
+    return date.getFullYear() +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      String(date.getDate()).padStart(2, "0") +
+      "T" +
+      String(date.getHours()).padStart(2, "0") +
+      String(date.getMinutes()).padStart(2, "0") +
+      "00";
+  }
+
+  googleDates = googleDateTime(start) + "/" + googleDateTime(end);
+} else {
+  const [year, month, day] = event.date.split("-");
+  const startDate = `${year}${month}${day}`;
+  const nextDay = new Date(Number(year), Number(month) - 1, Number(day) + 1);
+  const endDate = nextDay.getFullYear() +
+    String(nextDay.getMonth() + 1).padStart(2, "0") +
+    String(nextDay.getDate()).padStart(2, "0");
+  googleDates = startDate + "/" + endDate;
+}
+
+const url = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=" + encodeURIComponent(event.title) +
+  "&dates=" + encodeURIComponent(googleDates) +
+  "&details=" + encodeURIComponent("MoveDance " + event.type);
       return `<div class="event-item">
         <strong>${escapeText(event.title)}</strong>
 <p>${escapeText(event.type)} · ${escapeText(event.date)} ${escapeText(formatTime(event.time))}</p>        <a href="${url}" target="_blank" rel="noopener">Add to Google Calendar</a><br>
