@@ -245,6 +245,8 @@
       }
     }
   </style>
+  <script async defer src="https://apis.google.com/js/api.js"></script>
+<script async defer src="https://accounts.google.com/gsi/client"></script>
 </head>
 
 <body>
@@ -273,6 +275,9 @@
       <button onclick="exportToGoogleCalendar()">
         Sync to Google Calendar
       </button>
+      <button onclick="connectGoogleCalendar()">
+  Connect Google Calendar
+</button>
     </div>
   </div>
 
@@ -804,6 +809,48 @@
       "Your MoveDance calendar file has been downloaded! Next, import the file into Google Calendar."
     );
   }
+
+async function connectGoogleCalendar() {
+  if (!window.gapi || !window.google?.accounts?.oauth2) {
+    alert("Google is still loading. Please wait a moment and try again.");
+    return;
+  }
+
+  try {
+    await new Promise(resolve => gapi.load("client", resolve));
+
+    await gapi.client.init({
+      apiKey: "AIzaSyDUbjR5WIkNYeeMJQOPQF1WVIO7iAzVENA",
+      discoveryDocs: [
+        "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
+      ]
+    });
+
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: "87024220543-6ckc1382300670m5oeifl3s0q8jd881o.apps.googleusercontent.com",
+      scope: "https://www.googleapis.com/auth/calendar.events.owned",
+
+      callback: (response) => {
+        if (response.error) {
+          alert("Google connection was not completed.");
+          return;
+        }
+
+        gapi.client.setToken({
+          access_token: response.access_token
+        });
+
+        alert("MoveDance is now connected to Google Calendar!");
+      }
+    });
+
+    tokenClient.requestAccessToken({ prompt: "consent" });
+
+  } catch (error) {
+    console.error(error);
+    alert("There was a problem connecting to Google Calendar.");
+  }
+}
 
   renderCalendar();
 </script>
