@@ -101,10 +101,17 @@
 </article>
 
       <article class="card">
-        <h3>🎵 Choreography Library</h3>
-        <p>Organize dance names, practice notes, and video links.</p>
-        <p><em>Your choreography library will appear here.</em></p>
-      </article>
+  <h3>🎵 Choreography Library</h3>
+  <p>Organize routines and practice notes.</p>
+
+  <input id="danceName" placeholder="Dance or routine name">
+  <textarea id="danceNotes" placeholder="Choreography notes"></textarea>
+  <input id="danceVideo" placeholder="Practice video link (optional)">
+
+  <button onclick="addDance()">Save Routine</button>
+
+  <ul id="danceList"></ul>
+</article>
 
       <article class="card">
         <h3>🏆 Competition Planner</h3>
@@ -155,15 +162,34 @@
       item.textContent = value;
       document.getElementById("noteList").appendChild(item);
       field.value = "";
-    }function addClass() {
-  const name = document.getElementById("className").value.trim();
-  const day = document.getElementById("classDay").value.trim();
-  const time = document.getElementById("classTime").value.trim();
+    function addDance() {
+  const name = document.getElementById("danceName").value.trim();
+  const notes = document.getElementById("danceNotes").value.trim();
+  const video = document.getElementById("danceVideo").value.trim();
 
-  if (!name || !day || !time) {
-    alert("Please fill in all three class details.");
+  if (!name) {
+    alert("Please enter a dance name.");
     return;
   }
+
+  const item = document.createElement("li");
+  item.textContent = name + " — " + notes;
+
+  if (video) {
+    const link = document.createElement("a");
+    link.href = video;
+    link.textContent = " Watch practice video";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    item.appendChild(link);
+  }
+
+  document.getElementById("danceList").appendChild(item);
+
+  document.getElementById("danceName").value = "";
+  document.getElementById("danceNotes").value = "";
+  document.getElementById("danceVideo").value = "";
+}
 
   const item = document.createElement("li");
   item.textContent = name + " — " + day + " — " + time;
