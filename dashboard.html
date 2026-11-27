@@ -185,7 +185,19 @@
       header { padding: 20px 5%; }
       nav a { margin-left: 0; margin-right: 14px; }
       main { padding: 30px 5%; }
-    }
+    }.practice-photo {
+  padding: 0;
+  overflow: hidden;
+  min-height: 220px;
+}
+
+.practice-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+}
   </style>
 </head>
 <body>
@@ -252,15 +264,20 @@
         <p>Keep important studio updates in one place.</p>
       </a>
 
-      <a class="card" href="practice.html">
-        <span>07 / PERSONAL</span>
-        <h3>Practice Notes</h3>
-        <p>Save reminders and personal practice notes.</p>
-      </a>
-    </section>
+    <a class="card" href="practice.html">
+  <span>07 / PERSONAL</span>
+  <h3>Practice Notes</h3>
+  <p>Save reminders and personal practice notes.</p>
+</a>
 
-    <a class="back-link" href="index.html">← Return to MoveDance home</a>
-  </main>
+<div class="card practice-photo">
+  <img src="dance-photo-4.png" alt="Dancers rehearsing">
+</div>
+</section>
+
+<a class="back-link" href="index.html">← Return to MoveDance home</a>
+
+</main>
 
   <footer>MoveDance Studio Hub · Made for the love of dance</footer>
 </body>
