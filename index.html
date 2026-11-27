@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f1e9">
+  <title>MoveDance | Studio Hub</title>
+  <style>
+    :root {
+      --ivory: #f5f1e9;
+      --beige: #e8dfd1;
+      --sage: #a8b5a0;
+      --taupe: #8b7d70;
+      --charcoal: #343832;
+      --white: #fffefa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+    }
+    header {
+      padding: 28px 7%;
+      background: var(--white);
+      border-bottom: 1px solid var(--beige);
+    }
+    h1 { margin: 0; letter-spacing: 2px; }
+    header p { color: var(--taupe); margin-bottom: 0; }
+    main { max-width: 1050px; margin: auto; padding: 28px 6%; }
+    .welcome {
+      background: var(--sage);
+      padding: 28px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+    }
+    .welcome h2 { margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--beige);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    button {
+      background: var(--charcoal);
+      color: white;
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 15px;
+      cursor: pointer;
+    }
+    button:hover { opacity: .85; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 7px 0 12px;
+      border: 1px solid var(--beige);
+      border-radius: 8px;
+      font: inherit;
+    }
+    #noteList { padding-left: 20px; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--taupe);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MoveDance</h1>
+    <p>One place for every step of your dance journey.</p>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h2>Welcome to MoveDance</h2>
+      <p>Your studio's space for classes, choreography, competitions, and communication.</p>
+      <strong>Plan together. Practice with purpose. Dance with confidence.</strong>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>📅 Class Schedule</h3>
+        <p>Keep track of upcoming studio classes and rehearsals.</p>
+        <p><em>Your class schedule will appear here.</em></p>
+      </article>
+
+      <article class="card">
+        <h3>🎵 Choreography Library</h3>
+        <p>Organize dance names, practice notes, and video links.</p>
+        <p><em>Your choreography library will appear here.</em></p>
+      </article>
+
+      <article class="card">
+        <h3>🏆 Competition Planner</h3>
+        <p>Plan competition dates, routines, and important reminders.</p>
+        <p><em>Your competition plans will appear here.</em></p>
+      </article>
+
+      <article class="card">
+        <h3>👗 Costumes & Packing</h3>
+        <p>Keep costume details and packing lists organized.</p>
+        <p><em>Your costume checklist will appear here.</em></p>
+      </article>
+
+      <article class="card">
+        <h3>📋 Attendance</h3>
+        <p>Give instructors a place to organize class attendance.</p>
+        <p><em>Your attendance records will appear here.</em></p>
+      </article>
+
+      <article class="card">
+        <h3>💬 Studio Announcements</h3>
+        <p>A future space for studio updates and parent announcements.</p>
+        <p><em>Your studio announcements will appear here.</em></p>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:20px">
+      <h3>Personal Practice Notes</h3>
+      <label for="note">Write a practice note:</label>
+      <textarea id="note" rows="3" placeholder="What would you like to remember?"></textarea>
+      <button onclick="addNote()">Save note on this device</button>
+      <ul id="noteList"></ul>
+      <small>Demo only: notes are not shared with a studio or saved to an online account.</small>
+    </section>
+  </main>
+
+  <footer>MoveDance · Made for every dance journey</footer>
+
+  <script>
+    function addNote() {
+      const field = document.getElementById("note");
+      const value = field.value.trim();
+      if (!value) {
+        alert("Please write a note first.");
+        return;
+      }
+      const item = document.createElement("li");
+      item.textContent = value;
+      document.getElementById("noteList").appendChild(item);
+      field.value = "";
+    }
+  </script>
+</body>
+</html>
