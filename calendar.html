@@ -8,6 +8,7 @@
   <title>MoveDance | Rehearsal Calendar</title>
   <link rel="icon" type="image/png" href="movedance-logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+
   <style>
     :root {
       --ivory: #f7f4ef;
@@ -17,43 +18,87 @@
       --white: #fffdf9;
       --sage: #a7ad98;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: var(--ivory);
       color: var(--brown);
       font-family: 'Manrope', Arial, sans-serif;
     }
-    header { justify-content: space-between;
-flex-wrap: wrap;
+
+    header {
+      justify-content: space-between;
+      flex-wrap: wrap;
       padding: 25px 7%;
       border-bottom: 1px solid var(--beige);
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    header img { width: 55px; height: 55px; object-fit: contain; }
-    h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; }
-    h1 { margin: 0; font-size: 36px; }
-   header p {
-  margin: 3px 0 0;
-  color: var(--taupe);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
 
-.dashboard-link {
-  color: var(--brown);
-  text-decoration: none;
-  border: 1px solid var(--taupe);
-  padding: 10px 16px;
-  font-size: 13px;
-}
-    main { max-width: 1100px; margin: auto; padding: 40px 6%; }
-    .top { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
-    .top h2 { font-size: 42px; margin: 0; }
-    button, input, select { font: inherit; }
+    header img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .dashboard-link {
+      color: var(--brown);
+      text-decoration: none;
+      border: 1px solid var(--taupe);
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 6%;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .top h2 {
+      font-size: 42px;
+      margin: 0;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
     button {
       border: 1px solid var(--taupe);
       background: var(--brown);
@@ -61,49 +106,175 @@ flex-wrap: wrap;
       padding: 11px 16px;
       cursor: pointer;
     }
-    .calendar { background: var(--white); padding: 22px; margin-top: 25px; border: 1px solid var(--beige); }
-    .month { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .month h3 { font-size: 28px; margin: 0; }
-    .month button { background: var(--beige); color: var(--brown); }
-    .week, .days { display: grid; grid-template-columns: repeat(7, 1fr); }
-    .week div { text-align: center; color: var(--taupe); font-size: 12px; padding: 10px 0; }
-    .day { min-height: 90px; border: 1px solid var(--beige); padding: 7px; font-size: 13px; }
-    .day.today { background: #eef0e8; }
-    .event { background: var(--sage); color: #263021; padding: 4px; margin-top: 5px; font-size: 10px; overflow-wrap: anywhere; }
-    .form-area { background: var(--beige); padding: 22px; margin-top: 25px; }
-    .form-area h3 { font-size: 27px; margin: 0 0 15px; }
-    .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-    input, select { width: 100%; padding: 12px; border: 1px solid var(--taupe); background: var(--white); color: var(--brown); }
-    .form-area button { margin-top: 14px; }
-    .event-list { margin-top: 25px; }
-    .event-item { background: var(--white); border: 1px solid var(--beige); padding: 15px; margin: 10px 0; }
-    .event-item p { margin: 5px 0; font-size: 13px; }
-    .event-item a { color: var(--brown); font-size: 13px; }
-    .delete { background: transparent; color: #814b42; margin-top: 8px; }
+
+    .calendar {
+      background: var(--white);
+      padding: 22px;
+      margin-top: 25px;
+      border: 1px solid var(--beige);
+    }
+
+    .month {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .month h3 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .month button {
+      background: var(--beige);
+      color: var(--brown);
+    }
+
+    .week, .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .week div {
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+      padding: 10px 0;
+    }
+
+    .day {
+      min-height: 90px;
+      border: 1px solid var(--beige);
+      padding: 7px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .day.today {
+      background: #eef0e8;
+    }
+
+    .event {
+      background: var(--sage);
+      color: #263021;
+      padding: 4px;
+      margin-top: 5px;
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .form-area {
+      background: var(--beige);
+      padding: 22px;
+      margin-top: 25px;
+    }
+
+    .form-area h3 {
+      font-size: 27px;
+      margin: 0 0 15px;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--taupe);
+      background: var(--white);
+      color: var(--brown);
+    }
+
+    .form-area button {
+      margin-top: 14px;
+    }
+
+    .event-list {
+      margin-top: 25px;
+    }
+
+    .event-item {
+      background: var(--white);
+      border: 1px solid var(--beige);
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .event-item p {
+      margin: 5px 0;
+      font-size: 13px;
+    }
+
+    .event-item a {
+      color: var(--brown);
+      font-size: 13px;
+    }
+
+    .delete {
+      background: transparent;
+      color: #814b42;
+      margin-top: 8px;
+    }
+
     @media(max-width: 600px) {
-      main { padding: 25px 4%; }
-      .day { min-height: 65px; padding: 3px; font-size: 11px; }
-      .calendar { padding: 10px; }
+      main {
+        padding: 25px 4%;
+      }
+
+      .day {
+        min-height: 65px;
+        padding: 3px;
+        font-size: 11px;
+      }
+
+      .calendar {
+        padding: 10px;
+      }
+
+      .top h2 {
+        font-size: 34px;
+      }
+
+      .top-actions button {
+        padding: 9px 11px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
+
 <body>
+
 <header>
   <img src="movedance-logo.png" alt="MoveDance logo">
+
   <div>
     <h1>MoveDance</h1>
     <p>Rehearsal Calendar</p>
   </div>
+
   <a class="dashboard-link" href="dashboard.html">Dashboard</a>
 </header>
+
 <main>
-<div class="top">
-  <h2>Your Studio Calendar</h2>
-  <div>
-    <button onclick="document.getElementById('eventTitle').focus()">+ Add rehearsal</button>
-    <button onclick="exportToGoogleCalendar()">Sync to Google Calendar</button>
+
+  <div class="top">
+    <h2>Your Studio Calendar</h2>
+
+    <div class="top-actions">
+      <button onclick="document.getElementById('eventTitle').focus()">
+        + Add rehearsal
+      </button>
+
+      <button onclick="exportToGoogleCalendar()">
+        Sync to Google Calendar
+      </button>
+    </div>
   </div>
-</div>
 
   <section class="calendar">
     <div class="month">
@@ -111,18 +282,28 @@ flex-wrap: wrap;
       <h3 id="monthTitle"></h3>
       <button onclick="changeMonth(1)">→</button>
     </div>
+
     <div class="week">
-      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
     </div>
+
     <div class="days" id="calendarDays"></div>
   </section>
 
   <section class="form-area">
     <h3>Add a studio event</h3>
+
     <div class="fields">
       <input id="eventTitle" placeholder="Event name (e.g. Ballet rehearsal)">
       <input id="eventDate" type="date">
       <input id="eventTime" type="time">
+
       <select id="eventType">
         <option>Rehearsal</option>
         <option>Class</option>
@@ -130,6 +311,7 @@ flex-wrap: wrap;
         <option>Practice</option>
       </select>
     </div>
+
     <button onclick="addEvent()">Save event</button>
   </section>
 
@@ -137,194 +319,168 @@ flex-wrap: wrap;
     <h3>Upcoming events</h3>
     <div id="eventList"></div>
   </section>
+
 </main>
 
 <script>
   let shownDate = new Date();
-  let events = JSON.parse(localStorage.getItem('moveDanceCalendar') || '[]');
-  let classes = JSON.parse(localStorage.getItem('moveDanceSchedule') || '[]');
-  let competitions = JSON.parse(localStorage.getItem('moveDanceCompetitions') || '[]');
+
+  let events = JSON.parse(
+    localStorage.getItem('moveDanceCalendar') || '[]'
+  );
+
+  let classes = JSON.parse(
+    localStorage.getItem('moveDanceSchedule') || '[]'
+  );
+
+  let competitions = JSON.parse(
+    localStorage.getItem('moveDanceCompetitions') || '[]'
+  );
 
   function saveEvents() {
-    localStorage.setItem('moveDanceCalendar', JSON.stringify(events));
+    localStorage.setItem(
+      'moveDanceCalendar',
+      JSON.stringify(events)
+    );
+  }
+
+  function escapeText(value) {
+    return String(value || '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[char]);
+  }
+
+  function formatTime(time) {
+    if (!time) return "";
+
+    const [hours, minutes] = time.split(":");
+    const date = new Date();
+
+    date.setHours(Number(hours), Number(minutes));
+
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+  function changeMonth(amount) {
+    shownDate = new Date(
+      shownDate.getFullYear(),
+      shownDate.getMonth() + amount,
+      1
+    );
+
+    renderCalendar();
   }
 
   function renderCalendar() {
     const year = shownDate.getFullYear();
     const month = shownDate.getMonth();
+
     document.getElementById('monthTitle').textContent =
-      shownDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      shownDate.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric'
+      });
 
     const firstDay = new Date(year, month, 1).getDay();
     const totalDays = new Date(year, month + 1, 0).getDate();
     const today = new Date();
+
     let html = '';
 
-    for (let i = 0; i < firstDay; i++) html += '<div class="day"></div>';
+    for (let i = 0; i < firstDay; i++) {
+      html += '<div class="day"></div>';
+    }
 
     for (let day = 1; day <= totalDays; day++) {
-      const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+      const date =
+        `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+      const isToday =
+        year === today.getFullYear() &&
+        month === today.getMonth() &&
+        day === today.getDate();
+
       const matching = events.filter(event => event.date === date);
+
       html += `<div class="day ${isToday ? 'today' : ''}">${day}`;
-matching.forEach(event => {
-  html += `<div class="event">${escapeText(event.title)} ${escapeText(formatTime(event.time))}</div>`;
-});
 
-const weekday = new Date(year, month, day)
-  .toLocaleDateString('en-US', { weekday: 'long' });
+      matching.forEach(event => {
+        html += `
+          <div class="event">
+            ${escapeText(event.title)}
+            ${escapeText(formatTime(event.time))}
+          </div>
+        `;
+      });
 
-const matchingClasses = classes.filter(item => {
-  if (item.type === "once") {
-    return item.date === date;
-  }
+      const weekday = new Date(year, month, day)
+        .toLocaleDateString('en-US', { weekday: 'long' });
 
-  return item.day &&
-    item.day.trim().toLowerCase() === weekday.toLowerCase();
-});
+      const matchingClasses = classes.filter(item => {
+        if (item.type === "once") {
+          return item.date === date;
+        }
 
-matchingClasses.forEach(item => {
-  html += `<div class="event">Class: ${escapeText(item.name)} ${escapeText(formatTime(item.time))}</div>`;
-});
-      const matchingCompetitions = competitions.filter(item => item.date === date);
+        return item.day &&
+          item.day.trim().toLowerCase() === weekday.toLowerCase();
+      });
 
-matchingCompetitions.forEach(item => {
-  const competitionName = item.name || item.competitionName || "Competition";
-  const location = item.location || item.competitionLocation || "";
+      matchingClasses.forEach(item => {
+        html += `
+          <div class="event">
+            Class: ${escapeText(item.name)}
+            ${escapeText(formatTime(item.time))}
+          </div>
+        `;
+      });
 
-  html += `<div class="event">
-    Competition: ${escapeText(competitionName)}
-    ${location ? "· " + escapeText(location) : ""}
-  </div>`;
-});
+      const matchingCompetitions = competitions.filter(
+        item => item.date === date
+      );
 
-html += '</div>';
+      matchingCompetitions.forEach(item => {
+        const competitionName =
+          item.name || item.competitionName || "Competition";
+
+        const location =
+          item.location || item.competitionLocation || "";
+
+        html += `
+          <div class="event">
+            Competition: ${escapeText(competitionName)}
+            ${location ? "· " + escapeText(location) : ""}
+          </div>
+        `;
+      });
+
+      html += '</div>';
     }
 
     document.getElementById('calendarDays').innerHTML = html;
+
     renderEventList();
   }
 
-  function escapeText(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;',
-      '"': '&quot;', "'": '&#39;'
-    })[char]);
-  }
-
-  function changeMonth(amount) {
-    shownDate = new Date(shownDate.getFullYear(), shownDate.getMonth() + amount, 1);
-    function exportToGoogleCalendar() {
-  const allEvents = [];
-
-  events.forEach(event => {
-    allEvents.push({
-      title: event.title,
-      date: event.date,
-      time: event.time,
-      type: event.type
-    });
-  });
-
-  classes.forEach(item => {
-    if (item.type === "once" && item.date) {
-      allEvents.push({
-        title: item.name || "Class",
-        date: item.date,
-        time: item.time,
-        type: "Class"
-      });
-    }
-  });
-
-  competitions.forEach(item => {
-    if (item.date) {
-      allEvents.push({
-        title: item.name || item.competitionName || "Competition",
-        date: item.date,
-        time: "",
-        type: "Competition"
-      });
-    }
-  });
-
-  if (!allEvents.length) {
-    alert("There are no events to export yet.");
-    return;
-  }
-
-  let calendarFile = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//MoveDance//Studio Calendar//EN"
-  ];
-
-  allEvents.forEach((event, index) => {
-    const dateParts = event.date.split("-");
-    const date = dateParts.join("");
-
-    let start;
-    let end;
-
-    if (event.time) {
-      const time = event.time.replace(":", "") + "00";
-      start = date + "T" + time;
-      const [hours, minutes] = event.time.split(":").map(Number);
-      const endDate = new Date(event.date + "T00:00:00");
-      endDate.setHours(hours + 1, minutes);
-      end = endDate.getFullYear() +
-        String(endDate.getMonth() + 1).padStart(2, "0") +
-        String(endDate.getDate()).padStart(2, "0") + "T" +
-        String(endDate.getHours()).padStart(2, "0") +
-        String(endDate.getMinutes()).padStart(2, "0") + "00";
-    } else {
-      start = date;
-      const nextDay = new Date(event.date + "T12:00:00");
-      nextDay.setDate(nextDay.getDate() + 1);
-      end = nextDay.getFullYear() +
-        String(nextDay.getMonth() + 1).padStart(2, "0") +
-        String(nextDay.getDate()).padStart(2, "0");
-    }
-
-    const safeTitle = event.title.replace(/[,;\\]/g, " ");
-    calendarFile.push(
-      "BEGIN:VEVENT",
-      "UID:movedance-" + Date.now() + "-" + index + "@movedance",
-      "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
-      event.time
-        ? "DTSTART:" + start
-        : "DTSTART;VALUE=DATE:" + start,
-      event.time
-        ? "DTEND:" + end
-        : "DTEND;VALUE=DATE:" + end,
-      "SUMMARY:" + safeTitle,
-      "DESCRIPTION:" + event.type,
-      "END:VEVENT"
-    );
-  });
-
-  calendarFile.push("END:VCALENDAR");
-
-  const blob = new Blob([calendarFile.join("\r\n")], {
-    type: "text/calendar;charset=utf-8"
-  });
-
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "MoveDance-Calendar.ics";
-  link.click();
-  URL.revokeObjectURL(link.href);
-
-  alert("Your MoveDance calendar has been exported! Import the downloaded file into Google Calendar.");
-}
-    renderCalendar();
-  }
-
   function addEvent() {
-    const title = document.getElementById('eventTitle').value.trim();
-    const date = document.getElementById('eventDate').value;
-    const time = document.getElementById('eventTime').value;
-    const type = document.getElementById('eventType').value;
+    const title =
+      document.getElementById('eventTitle').value.trim();
+
+    const date =
+      document.getElementById('eventDate').value;
+
+    const time =
+      document.getElementById('eventTime').value;
+
+    const type =
+      document.getElementById('eventType').value;
 
     if (!title || !date) {
       alert('Please enter an event name and date.');
@@ -332,85 +488,325 @@ html += '</div>';
     }
 
     events.push({ title, date, time, type });
-    events.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+
+    events.sort((a, b) =>
+      (a.date + a.time).localeCompare(b.date + b.time)
+    );
+
     saveEvents();
 
     document.getElementById('eventTitle').value = '';
     document.getElementById('eventDate').value = '';
     document.getElementById('eventTime').value = '';
+
     shownDate = new Date(date + 'T12:00:00');
+
     renderCalendar();
   }
 
   function renderEventList() {
     const list = document.getElementById('eventList');
+
     if (!events.length) {
       list.innerHTML = '<p>No events added yet.</p>';
       return;
     }
 
     list.innerHTML = events.map((event, index) => {
- let googleDates;
+      let googleDates;
 
-if (event.time) {
-  const [hours, minutes] = event.time.split(":").map(Number);
-  const start = new Date(event.date + "T00:00:00");
-  start.setHours(hours, minutes, 0, 0);
-  const end = new Date(start.getTime() + 60 * 60 * 1000);
+      if (event.time) {
+        const [hours, minutes] = event.time.split(":").map(Number);
 
-  function googleDateTime(date) {
-    return date.getFullYear() +
-      String(date.getMonth() + 1).padStart(2, "0") +
-      String(date.getDate()).padStart(2, "0") +
-      "T" +
-      String(date.getHours()).padStart(2, "0") +
-      String(date.getMinutes()).padStart(2, "0") +
-      "00";
-  }
+        const start = new Date(event.date + "T00:00:00");
+        start.setHours(hours, minutes, 0, 0);
 
-  googleDates = googleDateTime(start) + "/" + googleDateTime(end);
-} else {
-  const [year, month, day] = event.date.split("-");
-  const startDate = `${year}${month}${day}`;
-  const nextDay = new Date(Number(year), Number(month) - 1, Number(day) + 1);
-  const endDate = nextDay.getFullYear() +
-    String(nextDay.getMonth() + 1).padStart(2, "0") +
-    String(nextDay.getDate()).padStart(2, "0");
-  googleDates = startDate + "/" + endDate;
-}
+        const end = new Date(start.getTime() + 60 * 60 * 1000);
 
-const url = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-  "&text=" + encodeURIComponent(event.title) +
-  "&dates=" + encodeURIComponent(googleDates) +
-  "&details=" + encodeURIComponent("MoveDance " + event.type);
-      return `<div class="event-item">
-        <strong>${escapeText(event.title)}</strong>
-<p>${escapeText(event.type)} · ${escapeText(event.date)} ${escapeText(formatTime(event.time))}</p>        <a href="${url}" target="_blank" rel="noopener">Add to Google Calendar</a><br>
-        <button class="delete" onclick="deleteEvent(${index})">Delete event</button>
-      </div>`;
+        function googleDateTime(date) {
+          return date.getFullYear() +
+            String(date.getMonth() + 1).padStart(2, "0") +
+            String(date.getDate()).padStart(2, "0") +
+            "T" +
+            String(date.getHours()).padStart(2, "0") +
+            String(date.getMinutes()).padStart(2, "0") +
+            "00";
+        }
+
+        googleDates =
+          googleDateTime(start) + "/" + googleDateTime(end);
+
+      } else {
+        const [year, month, day] = event.date.split("-");
+
+        const startDate = `${year}${month}${day}`;
+
+        const nextDay = new Date(
+          Number(year),
+          Number(month) - 1,
+          Number(day) + 1
+        );
+
+        const endDate =
+          nextDay.getFullYear() +
+          String(nextDay.getMonth() + 1).padStart(2, "0") +
+          String(nextDay.getDate()).padStart(2, "0");
+
+        googleDates = startDate + "/" + endDate;
+      }
+
+      const url =
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(event.title) +
+        "&dates=" + encodeURIComponent(googleDates) +
+        "&details=" + encodeURIComponent("MoveDance " + event.type);
+
+      return `
+        <div class="event-item">
+          <strong>${escapeText(event.title)}</strong>
+
+          <p>
+            ${escapeText(event.type)} ·
+            ${escapeText(event.date)}
+            ${escapeText(formatTime(event.time))}
+          </p>
+
+          <a href="${url}" target="_blank" rel="noopener">
+            Add to Google Calendar
+          </a>
+
+          <br>
+
+          <button class="delete" onclick="deleteEvent(${index})">
+            Delete event
+          </button>
+        </div>
+      `;
     }).join('');
   }
 
   function deleteEvent(index) {
     if (!confirm('Delete this event?')) return;
+
     events.splice(index, 1);
+
     saveEvents();
     renderCalendar();
   }
-function formatTime(time) {
-  if (!time) return "";
 
-  const [hours, minutes] = time.split(":");
-  const date = new Date();
-  date.setHours(Number(hours), Number(minutes));
+  // GOOGLE CALENDAR EXPORT
 
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true
-  });
-}
+  function exportToGoogleCalendar() {
+    const allEvents = [];
+
+    // Add regular calendar events
+    events.forEach(event => {
+      if (!event.date) return;
+
+      allEvents.push({
+        title: event.title || "MoveDance Event",
+        date: event.date,
+        time: event.time || "",
+        type: event.type || "Studio Event"
+      });
+    });
+
+    // Add one-time classes
+    classes.forEach(item => {
+      if (item.type === "once" && item.date) {
+        allEvents.push({
+          title: item.name || "Class",
+          date: item.date,
+          time: item.time || "",
+          type: "Class"
+        });
+      }
+    });
+
+    // Add competitions
+    competitions.forEach(item => {
+      if (item.date) {
+        allEvents.push({
+          title: item.name || item.competitionName || "Competition",
+          date: item.date,
+          time: "",
+          type: "Competition",
+          location: item.location || item.competitionLocation || ""
+        });
+      }
+    });
+
+    if (!allEvents.length) {
+      alert("There are no events to export yet.");
+      return;
+    }
+
+    function icsEscape(value) {
+      return String(value || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\n/g, "\\n")
+        .replace(/,/g, "\\,")
+        .replace(/;/g, "\\;");
+    }
+
+    function dateString(date) {
+      return date.getFullYear() +
+        String(date.getMonth() + 1).padStart(2, "0") +
+        String(date.getDate()).padStart(2, "0");
+    }
+
+    function timeString(date) {
+      return String(date.getHours()).padStart(2, "0") +
+        String(date.getMinutes()).padStart(2, "0") +
+        "00";
+    }
+
+    const calendarFile = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "CALSCALE:GREGORIAN",
+      "PRODID:-//MoveDance//Studio Calendar//EN"
+    ];
+
+    allEvents.forEach((event, index) => {
+      const startDate = new Date(event.date + "T12:00:00");
+
+      if (Number.isNaN(startDate.getTime())) return;
+
+      calendarFile.push(
+        "BEGIN:VEVENT",
+        "UID:movedance-event-" + index + "-" +
+          event.date.replace(/-/g, "") + "@movedance",
+        "DTSTAMP:" +
+          new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"
+      );
+
+      if (event.time) {
+        const [hours, minutes] = event.time.split(":").map(Number);
+
+        const start = new Date(event.date + "T00:00:00");
+        start.setHours(hours, minutes, 0, 0);
+
+        const end = new Date(start.getTime() + 60 * 60 * 1000);
+
+        calendarFile.push(
+          "DTSTART:" + dateString(start) + "T" + timeString(start),
+          "DTEND:" + dateString(end) + "T" + timeString(end)
+        );
+
+      } else {
+        const nextDay = new Date(startDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
+        calendarFile.push(
+          "DTSTART;VALUE=DATE:" + dateString(startDate),
+          "DTEND;VALUE=DATE:" + dateString(nextDay)
+        );
+      }
+
+      const description = event.location
+        ? event.type + " · " + event.location
+        : event.type;
+
+      calendarFile.push(
+        "SUMMARY:" + icsEscape(event.title),
+        "DESCRIPTION:" + icsEscape(description),
+        "END:VEVENT"
+      );
+    });
+
+    // Add recurring weekly classes as weekly calendar events
+    const weekdayCodes = {
+      Sunday: "SU",
+      Monday: "MO",
+      Tuesday: "TU",
+      Wednesday: "WE",
+      Thursday: "TH",
+      Friday: "FR",
+      Saturday: "SA"
+    };
+
+    classes.forEach((item, index) => {
+      if (item.type === "once" || !item.day) return;
+
+      const dayName = Object.keys(weekdayCodes).find(
+        day => day.toLowerCase() === item.day.trim().toLowerCase()
+      );
+
+      if (!dayName) return;
+
+      const targetDay = Object.keys(weekdayCodes).indexOf(dayName);
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+
+      const daysUntil = (targetDay - start.getDay() + 7) % 7;
+      start.setDate(start.getDate() + daysUntil);
+
+      if (item.time) {
+        const [hours, minutes] = item.time.split(":").map(Number);
+        start.setHours(hours, minutes, 0, 0);
+
+        const end = new Date(start.getTime() + 60 * 60 * 1000);
+
+        calendarFile.push(
+          "BEGIN:VEVENT",
+          "UID:movedance-recurring-class-" + index + "@movedance",
+          "DTSTAMP:" +
+            new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
+          "DTSTART:" + dateString(start) + "T" + timeString(start),
+          "DTEND:" + dateString(end) + "T" + timeString(end),
+          "RRULE:FREQ=WEEKLY;BYDAY=" + weekdayCodes[dayName],
+          "SUMMARY:" + icsEscape(item.name || "Dance Class"),
+          "DESCRIPTION:MoveDance recurring class",
+          "END:VEVENT"
+        );
+
+      } else {
+        calendarFile.push(
+          "BEGIN:VEVENT",
+          "UID:movedance-recurring-class-" + index + "@movedance",
+          "DTSTAMP:" +
+            new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
+          "DTSTART;VALUE=DATE:" + dateString(start),
+          "DTEND;VALUE=DATE:" + dateString(new Date(
+            start.getFullYear(),
+            start.getMonth(),
+            start.getDate() + 1
+          )),
+          "RRULE:FREQ=WEEKLY;BYDAY=" + weekdayCodes[dayName],
+          "SUMMARY:" + icsEscape(item.name || "Dance Class"),
+          "DESCRIPTION:MoveDance recurring class",
+          "END:VEVENT"
+        );
+      }
+    });
+
+    calendarFile.push("END:VCALENDAR");
+
+    const blob = new Blob(
+      [calendarFile.join("\r\n") + "\r\n"],
+      { type: "text/calendar;charset=utf-8" }
+    );
+
+    const downloadUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = downloadUrl;
+    link.download = "MoveDance-Calendar.ics";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+
+    alert(
+      "Your MoveDance calendar file has been downloaded! Next, import the file into Google Calendar."
+    );
+  }
+
   renderCalendar();
 </script>
+
 </body>
 </html>
