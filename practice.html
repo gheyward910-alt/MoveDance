@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Personal Practice Notes</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .note-card {
+      background: var(--white);
+      padding: 22px;
+      margin-top: 14px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .note-card strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 25px;
+    }
+    .note-date {
+      color: var(--taupe);
+      font-size: 12px;
+    }
+    .note-card button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">07 / Your progress</p>
+    <h2>Personal Practice Notes</h2>
+    <p class="intro">Keep track of routines, practice goals, corrections, and the little details you want to remember as you grow as a dancer.</p>
+
+    <section class="panel">
+      <h3>Add a Practice Note</h3>
+      <form id="practiceForm">
+        <label for="noteTitle">Routine or practice title</label>
+        <input id="noteTitle" placeholder="Example: Jazz routine" required>
+
+        <label for="noteDate">Practice date</label>
+        <input id="noteDate" type="date">
+
+        <label for="noteFocus">Practice focus</label>
+        <input id="noteFocus" placeholder="Example: Transitions and timing">
+
+        <label for="noteDetails">Notes and reminders</label>
+        <textarea id="noteDetails" placeholder="What did you work on? What do you want to remember next time?" required></textarea>
+
+        <button type="submit">Save Practice Note</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Your Saved Notes</h3>
+      <div id="practiceList">
+        <p>No practice notes saved yet.</p>
+      </div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("practiceForm");
+    const practiceList = document.getElementById("practiceList");
+
+    let notes = JSON.parse(localStorage.getItem("moveDancePracticeNotes") || "[]");
+
+    function displayNotes() {
+      practiceList.innerHTML = "";
+
+      if (notes.length === 0) {
+        practiceList.textContent = "No practice notes saved yet.";
+        return;
+      }
+
+      notes.forEach((note, index) => {
+        const card = document.createElement("article");
+        card.className = "note-card";
+
+        const title = document.createElement("strong");
+        title.textContent = note.title;
+
+        const date = document.createElement("p");
+        date.className = "note-date";
+        date.textContent = note.date || "Date not provided";
+
+        const focus = document.createElement("p");
+        focus.textContent = note.focus ? "Practice focus: " + note.focus : "";
+
+        const details = document.createElement("p");
+        details.textContent = note.details;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          notes.splice(index, 1);
+          saveNotes();
+        });
+
+        card.append(title, date, focus, details, remove);
+        practiceList.appendChild(card);
+      });
+    }
+
+    function saveNotes() {
+      localStorage.setItem("moveDancePracticeNotes", JSON.stringify(notes));
+      displayNotes();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      notes.unshift({
+        title: document.getElementById("noteTitle").value.trim(),
+        date: document.getElementById("noteDate").value,
+        focus: document.getElementById("noteFocus").value.trim(),
+        details: document.getElementById("noteDetails").value.trim()
+      });
+
+      saveNotes();
+      form.reset();
+    });
+
+    displayNotes();
+  </script>
+</body>
+</html>
