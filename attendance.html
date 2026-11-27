@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Attendance Tracker</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .attendance-item {
+      background: var(--white);
+      padding: 16px;
+      margin-top: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .attendance-item strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 23px;
+    }
+    .attendance-item button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">05 / Studio records</p>
+    <h2>Attendance Tracker</h2>
+    <p class="intro">Keep a simple record of class attendance and see who was present for each dance session.</p>
+
+    <section class="panel">
+      <h3>Record Attendance</h3>
+      <form id="attendanceForm">
+        <label for="dancerName">Dancer name</label>
+        <input id="dancerName" placeholder="Enter dancer name" required>
+
+        <label for="className">Class</label>
+        <input id="className" placeholder="Example: Ballet" required>
+
+        <label for="attendanceDate">Date</label>
+        <input id="attendanceDate" type="date" required>
+
+        <label for="attendanceStatus">Attendance status</label>
+        <select id="attendanceStatus">
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+          <option value="Late">Late</option>
+          <option value="Excused">Excused</option>
+        </select>
+
+        <button type="submit">Save Attendance</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Attendance Records</h3>
+      <div id="attendanceList">
+        <p>No attendance records yet.</p>
+      </div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("attendanceForm");
+    const attendanceList = document.getElementById("attendanceList");
+
+    let records = JSON.parse(localStorage.getItem("moveDanceAttendance") || "[]");
+
+    function displayAttendance() {
+      attendanceList.innerHTML = "";
+
+      if (records.length === 0) {
+        attendanceList.textContent = "No attendance records yet.";
+        return;
+      }
+
+      records.forEach((record, index) => {
+        const card = document.createElement("div");
+        card.className = "attendance-item";
+
+        const name = document.createElement("strong");
+        name.textContent = record.name;
+
+        const details = document.createElement("p");
+        details.textContent =
+          record.className + " · " + record.date + " · " + record.status;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          records.splice(index, 1);
+          saveRecords();
+        });
+
+        card.append(name, details, remove);
+        attendanceList.appendChild(card);
+      });
+    }
+
+    function saveRecords() {
+      localStorage.setItem("moveDanceAttendance", JSON.stringify(records));
+      displayAttendance();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      records.push({
+        name: document.getElementById("dancerName").value.trim(),
+        className: document.getElementById("className").value.trim(),
+        date: document.getElementById("attendanceDate").value,
+        status: document.getElementById("attendanceStatus").value
+      });
+
+      saveRecords();
+      form.reset();
+    });
+
+    displayAttendance();
+  </script>
+</body>
+</html>
