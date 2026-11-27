@@ -97,10 +97,13 @@ flex-wrap: wrap;
   <a class="dashboard-link" href="dashboard.html">Dashboard</a>
 </header>
 <main>
-  <div class="top">
-    <h2>Your Studio Calendar</h2>
+<div class="top">
+  <h2>Your Studio Calendar</h2>
+  <div>
     <button onclick="document.getElementById('eventTitle').focus()">+ Add rehearsal</button>
+    <button onclick="exportToGoogleCalendar()">Sync to Google Calendar</button>
   </div>
+</div>
 
   <section class="calendar">
     <div class="month">
@@ -211,6 +214,109 @@ html += '</div>';
 
   function changeMonth(amount) {
     shownDate = new Date(shownDate.getFullYear(), shownDate.getMonth() + amount, 1);
+    function exportToGoogleCalendar() {
+  const allEvents = [];
+
+  events.forEach(event => {
+    allEvents.push({
+      title: event.title,
+      date: event.date,
+      time: event.time,
+      type: event.type
+    });
+  });
+
+  classes.forEach(item => {
+    if (item.type === "once" && item.date) {
+      allEvents.push({
+        title: item.name || "Class",
+        date: item.date,
+        time: item.time,
+        type: "Class"
+      });
+    }
+  });
+
+  competitions.forEach(item => {
+    if (item.date) {
+      allEvents.push({
+        title: item.name || item.competitionName || "Competition",
+        date: item.date,
+        time: "",
+        type: "Competition"
+      });
+    }
+  });
+
+  if (!allEvents.length) {
+    alert("There are no events to export yet.");
+    return;
+  }
+
+  let calendarFile = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//MoveDance//Studio Calendar//EN"
+  ];
+
+  allEvents.forEach((event, index) => {
+    const dateParts = event.date.split("-");
+    const date = dateParts.join("");
+
+    let start;
+    let end;
+
+    if (event.time) {
+      const time = event.time.replace(":", "") + "00";
+      start = date + "T" + time;
+      const [hours, minutes] = event.time.split(":").map(Number);
+      const endDate = new Date(event.date + "T00:00:00");
+      endDate.setHours(hours + 1, minutes);
+      end = endDate.getFullYear() +
+        String(endDate.getMonth() + 1).padStart(2, "0") +
+        String(endDate.getDate()).padStart(2, "0") + "T" +
+        String(endDate.getHours()).padStart(2, "0") +
+        String(endDate.getMinutes()).padStart(2, "0") + "00";
+    } else {
+      start = date;
+      const nextDay = new Date(event.date + "T12:00:00");
+      nextDay.setDate(nextDay.getDate() + 1);
+      end = nextDay.getFullYear() +
+        String(nextDay.getMonth() + 1).padStart(2, "0") +
+        String(nextDay.getDate()).padStart(2, "0");
+    }
+
+    const safeTitle = event.title.replace(/[,;\\]/g, " ");
+    calendarFile.push(
+      "BEGIN:VEVENT",
+      "UID:movedance-" + Date.now() + "-" + index + "@movedance",
+      "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
+      event.time
+        ? "DTSTART:" + start
+        : "DTSTART;VALUE=DATE:" + start,
+      event.time
+        ? "DTEND:" + end
+        : "DTEND;VALUE=DATE:" + end,
+      "SUMMARY:" + safeTitle,
+      "DESCRIPTION:" + event.type,
+      "END:VEVENT"
+    );
+  });
+
+  calendarFile.push("END:VCALENDAR");
+
+  const blob = new Blob([calendarFile.join("\r\n")], {
+    type: "text/calendar;charset=utf-8"
+  });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "MoveDance-Calendar.ics";
+  link.click();
+  URL.revokeObjectURL(link.href);
+
+  alert("Your MoveDance calendar has been exported! Import the downloaded file into Google Calendar.");
+}
     renderCalendar();
   }
 
