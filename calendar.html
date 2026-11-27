@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Rehearsal Calendar</title>
+  <link rel="icon" type="image/png" href="movedance-logo.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+      --sage: #a7ad98;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header img { width: 55px; height: 55px; object-fit: contain; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; }
+    h1 { margin: 0; font-size: 36px; }
+    header p { margin: 3px 0 0; color: var(--taupe); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+    main { max-width: 1100px; margin: auto; padding: 40px 6%; }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .top h2 { font-size: 42px; margin: 0; }
+    button, input, select { font: inherit; }
+    button {
+      border: 1px solid var(--taupe);
+      background: var(--brown);
+      color: white;
+      padding: 11px 16px;
+      cursor: pointer;
+    }
+    .calendar { background: var(--white); padding: 22px; margin-top: 25px; border: 1px solid var(--beige); }
+    .month { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .month h3 { font-size: 28px; margin: 0; }
+    .month button { background: var(--beige); color: var(--brown); }
+    .week, .days { display: grid; grid-template-columns: repeat(7, 1fr); }
+    .week div { text-align: center; color: var(--taupe); font-size: 12px; padding: 10px 0; }
+    .day { min-height: 90px; border: 1px solid var(--beige); padding: 7px; font-size: 13px; }
+    .day.today { background: #eef0e8; }
+    .event { background: var(--sage); color: #263021; padding: 4px; margin-top: 5px; font-size: 10px; overflow-wrap: anywhere; }
+    .form-area { background: var(--beige); padding: 22px; margin-top: 25px; }
+    .form-area h3 { font-size: 27px; margin: 0 0 15px; }
+    .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid var(--taupe); background: var(--white); color: var(--brown); }
+    .form-area button { margin-top: 14px; }
+    .event-list { margin-top: 25px; }
+    .event-item { background: var(--white); border: 1px solid var(--beige); padding: 15px; margin: 10px 0; }
+    .event-item p { margin: 5px 0; font-size: 13px; }
+    .event-item a { color: var(--brown); font-size: 13px; }
+    .delete { background: transparent; color: #814b42; margin-top: 8px; }
+    @media(max-width: 600px) {
+      main { padding: 25px 4%; }
+      .day { min-height: 65px; padding: 3px; font-size: 11px; }
+      .calendar { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <img src="movedance-logo.png" alt="MoveDance logo">
+  <div>
+    <h1>MoveDance</h1>
+    <p>Rehearsal Calendar</p>
+  </div>
+</header>
+
+<main>
+  <div class="top">
+    <h2>Your Studio Calendar</h2>
+    <button onclick="document.getElementById('eventTitle').focus()">+ Add rehearsal</button>
+  </div>
+
+  <section class="calendar">
+    <div class="month">
+      <button onclick="changeMonth(-1)">←</button>
+      <h3 id="monthTitle"></h3>
+      <button onclick="changeMonth(1)">→</button>
+    </div>
+    <div class="week">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="days" id="calendarDays"></div>
+  </section>
+
+  <section class="form-area">
+    <h3>Add a studio event</h3>
+    <div class="fields">
+      <input id="eventTitle" placeholder="Event name (e.g. Ballet rehearsal)">
+      <input id="eventDate" type="date">
+      <input id="eventTime" type="time">
+      <select id="eventType">
+        <option>Rehearsal</option>
+        <option>Class</option>
+        <option>Competition</option>
+        <option>Practice</option>
+      </select>
+    </div>
+    <button onclick="addEvent()">Save event</button>
+  </section>
+
+  <section class="event-list">
+    <h3>Upcoming events</h3>
+    <div id="eventList"></div>
+  </section>
+</main>
+
+<script>
+  let shownDate = new Date();
+  let events = JSON.parse(localStorage.getItem('moveDanceCalendar') || '[]');
+
+  function saveEvents() {
+    localStorage.setItem('moveDanceCalendar', JSON.stringify(events));
+  }
+
+  function renderCalendar() {
+    const year = shownDate.getFullYear();
+    const month = shownDate.getMonth();
+    document.getElementById('monthTitle').textContent =
+      shownDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    let html = '';
+
+    for (let i = 0; i < firstDay; i++) html += '<div class="day"></div>';
+
+    for (let day = 1; day <= totalDays; day++) {
+      const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+      const matching = events.filter(event => event.date === date);
+      html += `<div class="day ${isToday ? 'today' : ''}">${day}`;
+      matching.forEach(event => {
+        html += `<div class="event">${escapeText(event.title)}</div>`;
+      });
+      html += '</div>';
+    }
+
+    document.getElementById('calendarDays').innerHTML = html;
+    renderEventList();
+  }
+
+  function escapeText(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;',
+      '"': '&quot;', "'": '&#39;'
+    })[char]);
+  }
+
+  function changeMonth(amount) {
+    shownDate = new Date(shownDate.getFullYear(), shownDate.getMonth() + amount, 1);
+    renderCalendar();
+  }
+
+  function addEvent() {
+    const title = document.getElementById('eventTitle').value.trim();
+    const date = document.getElementById('eventDate').value;
+    const time = document.getElementById('eventTime').value;
+    const type = document.getElementById('eventType').value;
+
+    if (!title || !date) {
+      alert('Please enter an event name and date.');
+      return;
+    }
+
+    events.push({ title, date, time, type });
+    events.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+    saveEvents();
+
+    document.getElementById('eventTitle').value = '';
+    document.getElementById('eventDate').value = '';
+    document.getElementById('eventTime').value = '';
+    shownDate = new Date(date + 'T12:00:00');
+    renderCalendar();
+  }
+
+  function renderEventList() {
+    const list = document.getElementById('eventList');
+    if (!events.length) {
+      list.innerHTML = '<p>No events added yet.</p>';
+      return;
+    }
+
+    list.innerHTML = events.map((event, index) => {
+      const googleDate = event.date.replace(/-/g, '') +
+        (event.time ? 'T' + event.time.replace(/:/g, '') + '00' : '');
+      const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+        '&text=' + encodeURIComponent(event.title) +
+        '&dates=' + encodeURIComponent(googleDate + '/' + googleDate) +
+        '&details=' + encodeURIComponent('MoveDance ' + event.type);
+
+      return `<div class="event-item">
+        <strong>${escapeText(event.title)}</strong>
+        <p>${escapeText(event.type)} · ${escapeText(event.date)} ${escapeText(event.time || '')}</p>
+        <a href="${url}" target="_blank" rel="noopener">Add to Google Calendar</a><br>
+        <button class="delete" onclick="deleteEvent(${index})">Delete event</button>
+      </div>`;
+    }).join('');
+  }
+
+  function deleteEvent(index) {
+    if (!confirm('Delete this event?')) return;
+    events.splice(index, 1);
+    saveEvents();
+    renderCalendar();
+  }
+
+  renderCalendar();
+</script>
+</body>
+</html>
