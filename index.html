@@ -137,11 +137,17 @@
   <ul id="packingList"></ul>
 </article>
 
-      <article class="card">
-        <h3>📋 Attendance</h3>
-        <p>Give instructors a place to organize class attendance.</p>
-        <p><em>Your attendance records will appear here.</em></p>
-      </article>
+<article class="card">
+  <h3>📋 Attendance Tracker</h3>
+  <p>Record class attendance.</p>
+
+  <input id="dancerName" placeholder="Dancer name">
+  <input id="attendanceDate" type="date">
+
+  <button onclick="addAttendance()">Record Attendance</button>
+
+  <ul id="attendanceList"></ul>
+</article>
 
       <article class="card">
         <h3>💬 Studio Announcements</h3>
@@ -260,6 +266,22 @@
   document.getElementById("packingList").appendChild(item);
 
   field.value = "";
+}function addAttendance() {
+  const name = document.getElementById("dancerName").value.trim();
+  const date = document.getElementById("attendanceDate").value;
+
+  if (!name || !date) {
+    alert("Please enter the dancer name and date.");
+    return;
+  }
+
+  const item = document.createElement("li");
+  item.textContent = name + " attended class on " + date;
+
+  document.getElementById("attendanceList").appendChild(item);
+
+  document.getElementById("dancerName").value = "";
+  document.getElementById("attendanceDate").value = "";
 }
 </script>
 
