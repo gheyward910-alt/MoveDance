@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Settings</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 36px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 45px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 60px);
+      margin: 10px 0;
+      font-style: italic;
+    }
+    .intro { line-height: 1.8; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 22px;
+    }
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #cbbbab;
+    }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-row p {
+      margin: 5px 0 0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    select {
+      padding: 10px;
+      border: 1px solid var(--taupe);
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      background: var(--brown);
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+    .notice {
+      font-size: 12px;
+      line-height: 1.7;
+      color: #68564a;
+    }
+    .back-link {
+      display: inline-block;
+      margin: 28px 0;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="calendar.html">Calendar</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">Personalize Your Experience</p>
+    <h2>Settings</h2>
+    <p class="intro">Adjust your MoveDance preferences.</p>
+
+    <section class="panel">
+      <h3>App Preferences</h3>
+
+      <div class="setting-row">
+        <div>
+          **Calendar start day**
+          <p>Choose which day begins your calendar week.</p>
+        </div>
+        <select id="weekStart">
+          <option value="sunday">Sunday</option>
+          <option value="monday">Monday</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          **Time display**
+          <p>Choose how times appear throughout the app.</p>
+        </div>
+        <select id="timeFormat">
+          <option value="12">12-hour (AM/PM)</option>
+          <option value="24">24-hour</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          **Preferred language**
+          <p>Choose your display language.</p>
+        </div>
+        <select id="language">
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <button id="saveSettings">Save Settings</button>
+      <p id="saveMessage" role="status"></p>
+    </section>
+
+    <p class="notice">
+      These preferences are saved in this browser. Some settings may need additional updates to other pages before they affect the entire app.
+    </p>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const settings = JSON.parse(
+      localStorage.getItem("moveDanceSettings") || "{}"
+    );
+
+    document.getElementById("weekStart").value =
+      settings.weekStart || "sunday";
+
+    document.getElementById("timeFormat").value =
+      settings.timeFormat || "12";
+
+    document.getElementById("language").value =
+      settings.language || "en";
+
+    document.getElementById("saveSettings").addEventListener("click", function() {
+      const updatedSettings = {
+        weekStart: document.getElementById("weekStart").value,
+        timeFormat: document.getElementById("timeFormat").value,
+        language: document.getElementById("language").value
+      };
+
+      localStorage.setItem(
+        "moveDanceSettings",
+        JSON.stringify(updatedSettings)
+      );
+
+      document.getElementById("saveMessage").textContent =
+        "Your settings have been saved!";
+    });
+  </script>
+</body>
+</html>
