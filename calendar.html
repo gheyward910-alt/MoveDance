@@ -124,6 +124,7 @@
 <script>
   let shownDate = new Date();
   let events = JSON.parse(localStorage.getItem('moveDanceCalendar') || '[]');
+  let classes = JSON.parse(localStorage.getItem('moveDanceSchedule') || '[]');
 
   function saveEvents() {
     localStorage.setItem('moveDanceCalendar', JSON.stringify(events));
@@ -147,10 +148,22 @@
       const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
       const matching = events.filter(event => event.date === date);
       html += `<div class="day ${isToday ? 'today' : ''}">${day}`;
-      matching.forEach(event => {
-        html += `<div class="event">${escapeText(event.title)}</div>`;
-      });
-      html += '</div>';
+matching.forEach(event => {
+  html += `<div class="event">${escapeText(event.title)}</div>`;
+});
+
+const weekday = new Date(year, month, day)
+  .toLocaleDateString('en-US', { weekday: 'long' });
+
+const matchingClasses = classes.filter(item =>
+  item.day.trim().toLowerCase() === weekday.toLowerCase()
+);
+
+matchingClasses.forEach(item => {
+  html += `<div class="event">Class: ${escapeText(item.name)} ${escapeText(item.time)}</div>`;
+});
+
+html += '</div>';
     }
 
     document.getElementById('calendarDays').innerHTML = html;
