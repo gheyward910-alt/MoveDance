@@ -84,10 +84,12 @@
     <section class="welcome">
       <h2>Welcome to MoveDance</h2>
       <p>Your studio's space for classes, choreography, competitions, and communication.</p>
-      <strong>Plan together. Practice with purpose. Dance with confidence.</strong>
-    </section>
+<strong>Plan together. Practice with purpose. Dance with confidence.</strong>
+</section>
 
- <article class="card">
+<section class="grid">
+
+<article class="card">
   <h3>📅 Class Schedule</h3>
   <p>Add your upcoming dance classes.</p>
 
@@ -169,7 +171,40 @@
   <footer>MoveDance · Made for every dance journey</footer>
 
 
-<script>
+<script>function saveData() {
+  const sections = [
+    "noteList",
+    "classList",
+    "danceList",
+    "competitionList",
+    "packingList",
+    "attendanceList",
+    "announcementList"
+  ];
+
+  const data = {};
+
+  sections.forEach(function(id) {
+    data[id] = document.getElementById(id).innerHTML;
+  });
+
+  localStorage.setItem("moveDanceData", JSON.stringify(data));
+}
+
+function loadData() {
+  const saved = localStorage.getItem("moveDanceData");
+
+  if (!saved) return;
+
+  const data = JSON.parse(saved);
+
+  Object.keys(data).forEach(function(id) {
+    const list = document.getElementById(id);
+    if (list) list.innerHTML = data[id];
+  });
+}
+
+window.addEventListener("load", loadData);
   function addNote() {
     const field = document.getElementById("note");
     const value = field.value.trim();
@@ -183,6 +218,7 @@
     item.textContent = value;
     document.getElementById("noteList").appendChild(item);
     field.value = "";
+    saveData();
   }
 
   function addClass() {
@@ -198,6 +234,7 @@
     const item = document.createElement("li");
     item.textContent = name + " — " + day + " — " + time;
     document.getElementById("classList").appendChild(item);
+    saveData();
 
     document.getElementById("className").value = "";
     document.getElementById("classDay").value = "";
@@ -227,6 +264,7 @@
     }
 
     document.getElementById("danceList").appendChild(item);
+    saveData();
 
     document.getElementById("danceName").value = "";
     document.getElementById("danceNotes").value = "";
@@ -247,6 +285,7 @@
   item.textContent = name + " — " + date + " — " + location;
 
   document.getElementById("competitionList").appendChild(item);
+  saveData();
 
   document.getElementById("competitionName").value = "";
   document.getElementById("competitionDate").value = "";
@@ -264,7 +303,7 @@
   const item = document.createElement("li");
   item.textContent = value;
   document.getElementById("packingList").appendChild(item);
-
+saveData();
   field.value = "";
 }
 
@@ -280,7 +319,7 @@ function addAttendance() {  const name = document.getElementById("dancerName").v
   item.textContent = name + " attended class on " + date;
 
   document.getElementById("attendanceList").appendChild(item);
-
+saveData();
   document.getElementById("dancerName").value = "";
 document.getElementById("attendanceDate").value = "";
 }
@@ -298,6 +337,7 @@ function addAnnouncement() {
   item.textContent = value;
 
   document.getElementById("announcementList").appendChild(item);
+  saveData();
   field.value = "";
 }
 </script>
