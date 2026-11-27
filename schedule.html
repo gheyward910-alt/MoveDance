@@ -146,8 +146,29 @@
         <label for="className">Class name</label>
         <input id="className" placeholder="Example: Ballet" required>
 
-        <label for="classDay">Day</label>
-        <input id="classDay" placeholder="Example: Monday" required>
+     <label for="classType">Class schedule type</label>
+<select id="classType">
+  <option value="recurring">Recurring weekly</option>
+  <option value="once">One-time class</option>
+</select>
+
+<div id="recurringFields">
+  <label for="classDay">Day of the week</label>
+  <select id="classDay">
+    <option>Monday</option>
+    <option>Tuesday</option>
+    <option>Wednesday</option>
+    <option>Thursday</option>
+    <option>Friday</option>
+    <option>Saturday</option>
+    <option>Sunday</option>
+  </select>
+</div>
+
+<div id="onceFields" style="display:none;">
+  <label for="classDate">Class date</label>
+  <input id="classDate" type="date">
+</div>
 
         <label for="classTime">Time</label>
         <input id="classTime" type="time" required>
@@ -173,6 +194,15 @@
 
   <script>
     const form = document.getElementById("classForm");
+    const classType = document.getElementById("classType");
+const recurringFields = document.getElementById("recurringFields");
+const onceFields = document.getElementById("onceFields");
+
+classType.addEventListener("change", function() {
+  const isRecurring = classType.value === "recurring";
+  recurringFields.style.display = isRecurring ? "block" : "none";
+  onceFields.style.display = isRecurring ? "none" : "block";
+});
     const classList = document.getElementById("classList");
     let classes = JSON.parse(localStorage.getItem("moveDanceSchedule") || "[]");
 
@@ -191,8 +221,14 @@
         const title = document.createElement("strong");
         title.textContent = item.name;
 
-        const details = document.createElement("div");
-        details.textContent = item.day + " · " + item.time + (item.teacher ? " · " + item.teacher : "");
+const details = document.createElement("div");
+
+const scheduleText = item.type === "once"
+  ? "One-time · " + item.date
+  : "Every " + item.day;
+
+details.textContent = scheduleText + " · " + item.time +
+  (item.teacher ? " · " + item.teacher : "");
 
         const remove = document.createElement("button");
         remove.textContent = "Remove";
@@ -215,12 +251,24 @@
     form.addEventListener("submit", function(event) {
       event.preventDefault();
 
-      classes.push({
-        name: document.getElementById("className").value.trim(),
-        day: document.getElementById("classDay").value.trim(),
-        time: document.getElementById("classTime").value,
-        teacher: document.getElementById("classTeacher").value.trim()
-      });
+     const type = document.getElementById("classType").value;
+const date = type === "once"
+  ? document.getElementById("classDate").value
+  : "";
+
+if (type === "once" && !date) {
+  alert("Please choose a class date.");
+  return;
+}
+
+classes.push({
+  name: document.getElementById("className").value.trim(),
+  type: type,
+  day: type === "recurring" ? document.getElementById("classDay").value : "",
+  date: date,
+  time: document.getElementById("classTime").value,
+  teacher: document.getElementById("classTeacher").value.trim()
+});
 
       saveClasses();
       form.reset();
