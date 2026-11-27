@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Costumes & Packing</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    textarea { min-height: 75px; resize: vertical; }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .item {
+      background: var(--white);
+      padding: 16px;
+      margin-top: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .item strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 23px;
+    }
+    .item button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .item label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .item input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">04 / Ready for the stage</p>
+    <h2>Costumes & Packing</h2>
+    <p class="intro">Organize your dance costumes, accessories, and packing checklist so you're ready for class and competition day.</p>
+
+    <section class="panel">
+      <h3>Add a Costume or Accessory</h3>
+      <form id="costumeForm">
+        <label for="itemName">Item name</label>
+        <input id="itemName" placeholder="Example: Ballet costume" required>
+
+        <label for="itemDance">Dance or event</label>
+        <input id="itemDance" placeholder="Example: Spring showcase">
+
+        <label for="itemNotes">Notes</label>
+        <textarea id="itemNotes" placeholder="Color, accessories, or reminders..."></textarea>
+
+        <button type="submit">Save Item</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Costume Collection</h3>
+      <div id="costumeList">
+        <p>No items added yet.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>Packing Checklist</h3>
+      <form id="packingForm">
+        <label for="packingName">Packing item</label>
+        <input id="packingName" placeholder="Example: Dance shoes" required>
+        <button type="submit">Add to Checklist</button>
+      </form>
+      <div id="packingList"></div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const costumeForm = document.getElementById("costumeForm");
+    const packingForm = document.getElementById("packingForm");
+    const costumeList = document.getElementById("costumeList");
+    const packingList = document.getElementById("packingList");
+
+    let costumes = JSON.parse(localStorage.getItem("moveDanceCostumes") || "[]");
+    let packing = JSON.parse(localStorage.getItem("moveDancePacking") || "[]");
+
+    function displayCostumes() {
+      costumeList.innerHTML = "";
+      if (costumes.length === 0) {
+        costumeList.textContent = "No items added yet.";
+        return;
+      }
+
+      costumes.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "item";
+
+        const title = document.createElement("strong");
+        title.textContent = item.name;
+
+        const event = document.createElement("p");
+        event.textContent = item.event || "No event specified";
+
+        const notes = document.createElement("p");
+        notes.textContent = item.notes || "No notes added.";
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          costumes.splice(index, 1);
+          saveCostumes();
+        });
+
+        card.append(title, event, notes, remove);
+        costumeList.appendChild(card);
+      });
+    }
+
+    function displayPacking() {
+      packingList.innerHTML = "";
+      if (packing.length === 0) {
+        packingList.textContent = "Your packing items will appear here.";
+        return;
+      }
+
+      packing.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "item";
+
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = item.packed;
+        checkbox.addEventListener("change", () => {
+          packing[index].packed = checkbox.checked;
+          savePacking();
+        });
+
+        const name = document.createElement("span");
+        name.textContent = item.name;
+
+        label.append(checkbox, name);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          packing.splice(index, 1);
+          savePacking();
+        });
+
+        card.append(label, remove);
+        packingList.appendChild(card);
+      });
+    }
+
+    function saveCostumes() {
+      localStorage.setItem("moveDanceCostumes", JSON.stringify(costumes));
+      displayCostumes();
+    }
+
+    function savePacking() {
+      localStorage.setItem("moveDancePacking", JSON.stringify(packing));
+      displayPacking();
+    }
+
+    costumeForm.addEventListener("submit", event => {
+      event.preventDefault();
+      costumes.push({
+        name: document.getElementById("itemName").value.trim(),
+        event: document.getElementById("itemDance").value.trim(),
+        notes: document.getElementById("itemNotes").value.trim()
+      });
+      saveCostumes();
+      costumeForm.reset();
+    });
+
+    packingForm.addEventListener("submit", event => {
+      event.preventDefault();
+      packing.push({
+        name: document.getElementById("packingName").value.trim(),
+        packed: false
+      });
+      savePacking();
+      packingForm.reset();
+    });
+
+    displayCostumes();
+    displayPacking();
+  </script>
+</body>
+</html>
