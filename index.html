@@ -7,73 +7,163 @@
   <meta name="theme-color" content="#f5f1e9">
   <link rel="manifest" href="manifest.json">
   <title>MoveDance | Studio Hub</title>
-  <style>
-    :root {
-      --ivory: #f5f1e9;
-      --beige: #e8dfd1;
-      --sage: #a8b5a0;
-      --taupe: #8b7d70;
-      --charcoal: #343832;
-      --white: #fffefa;
+ 
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap');
+
+  :root {
+    --ivory: #f7f4ef;
+    --beige: #e2d7cb;
+    --sage: #b9b6a8;
+    --taupe: #9a8879;
+    --charcoal: #40271d;
+    --white: #fffdf9;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Manrope', Arial, sans-serif;
+    background: var(--ivory);
+    color: var(--charcoal);
+  }
+
+  header {
+    padding: 28px 7%;
+    background: var(--ivory);
+    border-bottom: 1px solid var(--beige);
+  }
+
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 42px;
+    letter-spacing: 1px;
+  }
+
+  header p {
+    color: var(--taupe);
+    margin-bottom: 0;
+  }
+
+  main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 45px 6%;
+  }
+
+  .welcome {
+    background: var(--ivory);
+    padding: 45px 35px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--beige);
+    margin-bottom: 45px;
+  }
+
+  .welcome h2 {
+    font-size: clamp(38px, 6vw, 66px);
+    line-height: 1;
+    margin-top: 0;
+    font-style: italic;
+  }
+
+  .welcome p {
+    max-width: 520px;
+    line-height: 1.8;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+  }
+
+  .card {
+    background: var(--beige);
+    border: none;
+    border-radius: 0;
+    padding: 30px 25px;
+    transition: transform .2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card h3 {
+    font-size: 27px;
+    margin-top: 0;
+  }
+
+  .card p {
+    line-height: 1.7;
+  }
+
+  button {
+    background: var(--charcoal);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    padding: 13px 22px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity .2s ease;
+  }
+
+  button:hover {
+    opacity: .8;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 12px;
+    border: 1px solid #d4c7b9;
+    border-radius: 3px;
+    background: var(--white);
+    color: var(--charcoal);
+    font: inherit;
+  }
+
+  input:focus, textarea:focus {
+    outline: 1px solid var(--taupe);
+  }
+
+  ul {
+    padding-left: 20px;
+    line-height: 1.9;
+  }
+
+  footer {
+    text-align: center;
+    padding: 35px;
+    color: var(--taupe);
+    border-top: 1px solid var(--beige);
+  }
+
+  @media (max-width: 600px) {
+    main {
+      padding: 25px 5%;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--ivory);
-      color: var(--charcoal);
-    }
-    header {
-      padding: 28px 7%;
-      background: var(--white);
-      border-bottom: 1px solid var(--beige);
-    }
-    h1 { margin: 0; letter-spacing: 2px; }
-    header p { color: var(--taupe); margin-bottom: 0; }
-    main { max-width: 1050px; margin: auto; padding: 28px 6%; }
+
     .welcome {
-      background: var(--sage);
-      padding: 28px;
-      border-radius: 18px;
-      margin-bottom: 24px;
+      padding: 30px 10px;
     }
-    .welcome h2 { margin-top: 0; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+
+    h1 {
+      font-size: 34px;
     }
-    .card {
-      background: var(--white);
-      border: 1px solid var(--beige);
-      border-radius: 16px;
-      padding: 20px;
-    }
-    .card h3 { margin-top: 0; }
-    button {
-      background: var(--charcoal);
-      color: white;
-      border: 0;
-      border-radius: 9px;
-      padding: 11px 15px;
-      cursor: pointer;
-    }
-    button:hover { opacity: .85; }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 7px 0 12px;
-      border: 1px solid var(--beige);
-      border-radius: 8px;
-      font: inherit;
-    }
-    #noteList { padding-left: 20px; }
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: var(--taupe);
-    }
-  </style>
+  }
+</style>
+
 </head>
 <body>
   <header>
