@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f1e9">
+  <link rel="manifest" href="manifest.json">
   <title>MoveDance | Studio Hub</title>
   <style>
     :root {
@@ -341,6 +342,18 @@ function addAnnouncement() {
   field.value = "";
 }
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(function() {
+        console.log("MoveDance app is ready!");
+      })
+      .catch(function(error) {
+        console.log("Service worker registration failed:", error);
+      });
+  });
+}
+</script>
 </body>
 </html>
