@@ -126,11 +126,16 @@
   <ul id="competitionList"></ul>
 </article>
 
-      <article class="card">
-        <h3>👗 Costumes & Packing</h3>
-        <p>Keep costume details and packing lists organized.</p>
-        <p><em>Your costume checklist will appear here.</em></p>
-      </article>
+<article class="card">
+  <h3>👗 Costumes & Packing</h3>
+  <p>Organize costumes and packing reminders.</p>
+
+  <input id="packingItem" placeholder="Add an item (example: Ballet shoes)">
+
+  <button onclick="addPackingItem()">Add to Packing List</button>
+
+  <ul id="packingList"></ul>
+</article>
 
       <article class="card">
         <h3>📋 Attendance</h3>
@@ -238,6 +243,20 @@
   document.getElementById("competitionName").value = "";
   document.getElementById("competitionDate").value = "";
   document.getElementById("competitionLocation").value = "";
+}function addPackingItem() {
+  const field = document.getElementById("packingItem");
+  const value = field.value.trim();
+
+  if (!value) {
+    alert("Please enter a packing item.");
+    return;
+  }
+
+  const item = document.createElement("li");
+  item.textContent = value;
+  document.getElementById("packingList").appendChild(item);
+
+  field.value = "";
 }
 </script>
 
