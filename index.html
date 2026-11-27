@@ -225,7 +225,9 @@
     document.getElementById("danceName").value = "";
     document.getElementById("danceNotes").value = "";
     document.getElementById("danceVideo").value = "";
-  }function addCompetition() {
+  }
+
+  function addCompetition() {
   const name = document.getElementById("competitionName").value.trim();
   const date = document.getElementById("competitionDate").value;
   const location = document.getElementById("competitionLocation").value.trim();
@@ -243,8 +245,9 @@
   document.getElementById("competitionName").value = "";
   document.getElementById("competitionDate").value = "";
   document.getElementById("competitionLocation").value = "";
-}function addPackingItem() {
-  const field = document.getElementById("packingItem");
+  }
+
+  function addPackingItem() {  const field = document.getElementById("packingItem");
   const value = field.value.trim();
 
   if (!value) {
