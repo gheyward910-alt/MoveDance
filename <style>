@@ -198,13 +198,29 @@
   object-fit: cover;
   display: block;
 }
-  </style>
+ .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+}
+
+.brand h1 {
+  margin: 0;
+} </style>
 </head>
 <body>
   <header>
     <div>
-      <h1>MoveDance</h1>
-      <p>Studio Hub</p>
+<div class="brand">
+  <img src="movedance-logo.png" alt="MoveDance logo">
+  <h1>MoveDance</h1>
+</div>      <p>Studio Hub</p>
     </div>
     <nav>
       <a href="index.html">Home</a>
