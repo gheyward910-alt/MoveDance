@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Account Information</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 36px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a, .back-link {
+      color: var(--brown);
+      text-decoration: none;
+      font-size: 13px;
+      margin-left: 16px;
+    }
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 45px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 60px);
+      margin: 10px 0;
+      font-style: italic;
+    }
+    .intro { line-height: 1.8; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 28px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 15px 0 6px;
+    }
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--taupe);
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 22px;
+      border: none;
+      background: var(--brown);
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+    .back-link {
+      display: inline-block;
+      margin: 28px 0;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+    }
+    .notice {
+      font-size: 12px;
+      line-height: 1.7;
+      color: #68564a;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="calendar.html">Calendar</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">Your Studio Profile</p>
+    <h2>Account Information</h2>
+    <p class="intro">Manage your basic profile information and keep your studio details up to date.</p>
+
+    <section class="panel">
+      <h3>Personal Information</h3>
+
+      <form id="accountForm">
+        <label for="fullName">Full name</label>
+        <input id="fullName" placeholder="Enter your name">
+
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="Enter your email">
+
+        <label for="studioName">Studio name</label>
+        <input id="studioName" placeholder="Enter your studio name">
+
+        <label for="phone">Phone number (optional)</label>
+        <input id="phone" type="tel" placeholder="Enter phone number">
+
+        <button type="submit">Save Information</button>
+      </form>
+      <p id="saveMessage" role="status"></p>
+    </section>
+
+    <p class="notice">
+      This is a local profile prototype. Information is saved only in this browser and is not protected by a login system. Avoid entering sensitive personal information.
+    </p>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("accountForm");
+    const fields = ["fullName", "email", "studioName", "phone"];
+
+    const savedAccount = JSON.parse(
+      localStorage.getItem("moveDanceAccount") || "{}"
+    );
+
+    fields.forEach(id => {
+      document.getElementById(id).value = savedAccount[id] || "";
+    });
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const account = {};
+
+      fields.forEach(id => {
+        account[id] = document.getElementById(id).value.trim();
+      });
+
+      localStorage.setItem("moveDanceAccount", JSON.stringify(account));
+
+      document.getElementById("saveMessage").textContent =
+        "Your information has been saved!";
+    });
+  </script>
+</body>
+</html>
