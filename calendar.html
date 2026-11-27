@@ -140,6 +140,7 @@ flex-wrap: wrap;
   let shownDate = new Date();
   let events = JSON.parse(localStorage.getItem('moveDanceCalendar') || '[]');
   let classes = JSON.parse(localStorage.getItem('moveDanceSchedule') || '[]');
+  let competitions = JSON.parse(localStorage.getItem('moveDanceCompetitions') || '[]');
 
   function saveEvents() {
     localStorage.setItem('moveDanceCalendar', JSON.stringify(events));
@@ -181,6 +182,17 @@ const matchingClasses = classes.filter(item => {
 
 matchingClasses.forEach(item => {
   html += `<div class="event">Class: ${escapeText(item.name)} ${escapeText(formatTime(item.time))}</div>`;
+});
+      const matchingCompetitions = competitions.filter(item => item.date === date);
+
+matchingCompetitions.forEach(item => {
+  const competitionName = item.name || item.competitionName || "Competition";
+  const location = item.location || item.competitionLocation || "";
+
+  html += `<div class="event">
+    Competition: ${escapeText(competitionName)}
+    ${location ? "· " + escapeText(location) : ""}
+  </div>`;
 });
 
 html += '</div>';
