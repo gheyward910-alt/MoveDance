@@ -66,6 +66,20 @@
       font-style: italic;
     }
     .intro { line-height: 1.8; }
+    .account-banner {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-top: 20px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .account-banner {
+    height: 220px;
+  }
+}
     .panel {
       background: var(--beige);
       padding: 28px;
@@ -129,6 +143,11 @@
     <p class="eyebrow">Your Studio Profile</p>
     <h2>Account Information</h2>
     <p class="intro">Manage your basic profile information and keep your studio details up to date.</p>
+    <img
+  src="dance-photo-2.png"
+  alt="MoveDance dancers rehearsing"
+  class="account-banner"
+>
 
     <section class="panel">
       <h3>Personal Information</h3>
