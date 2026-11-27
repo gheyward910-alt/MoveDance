@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Studio Announcements</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .announcement-item {
+      background: var(--white);
+      padding: 20px;
+      margin-top: 14px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .announcement-item strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 25px;
+    }
+    .announcement-date {
+      color: var(--taupe);
+      font-size: 12px;
+    }
+    .announcement-item button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">06 / What's happening</p>
+    <h2>Studio Announcements</h2>
+    <p class="intro">Keep important studio updates, reminders, and upcoming events organized in one place.</p>
+
+    <section class="panel">
+      <h3>Create an Announcement</h3>
+      <form id="announcementForm">
+        <label for="announcementTitle">Announcement title</label>
+        <input id="announcementTitle" placeholder="Example: Picture Day Reminder" required>
+
+        <label for="announcementDate">Date</label>
+        <input id="announcementDate" type="date" required>
+
+        <label for="announcementMessage">Message</label>
+        <textarea id="announcementMessage" placeholder="Write your studio update here..." required></textarea>
+
+        <button type="submit">Post Announcement</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Latest Announcements</h3>
+      <div id="announcementList">
+        <p>No announcements posted yet.</p>
+      </div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("announcementForm");
+    const announcementList = document.getElementById("announcementList");
+
+    let announcements = JSON.parse(localStorage.getItem("moveDanceAnnouncements") || "[]");
+
+    function displayAnnouncements() {
+      announcementList.innerHTML = "";
+
+      if (announcements.length === 0) {
+        announcementList.textContent = "No announcements posted yet.";
+        return;
+      }
+
+      announcements.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "announcement-item";
+
+        const title = document.createElement("strong");
+        title.textContent = item.title;
+
+        const date = document.createElement("p");
+        date.className = "announcement-date";
+        date.textContent = item.date;
+
+        const message = document.createElement("p");
+        message.textContent = item.message;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          announcements.splice(index, 1);
+          saveAnnouncements();
+        });
+
+        card.append(title, date, message, remove);
+        announcementList.appendChild(card);
+      });
+    }
+
+    function saveAnnouncements() {
+      localStorage.setItem("moveDanceAnnouncements", JSON.stringify(announcements));
+      displayAnnouncements();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      announcements.unshift({
+        title: document.getElementById("announcementTitle").value.trim(),
+        date: document.getElementById("announcementDate").value,
+        message: document.getElementById("announcementMessage").value.trim()
+      });
+
+      saveAnnouncements();
+      form.reset();
+    });
+
+    displayAnnouncements();
+  </script>
+</body>
+</html>
