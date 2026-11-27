@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ef">
+  <title>MoveDance | Competition Planner</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --ivory: #f7f4ef;
+      --beige: #e2d7cb;
+      --taupe: #9a8879;
+      --brown: #40271d;
+      --white: #fffdf9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--brown);
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+    header {
+      padding: 25px 7%;
+      border-bottom: 1px solid var(--beige);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    header p {
+      margin: 3px 0 0;
+      color: var(--taupe);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--brown);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 13px;
+    }
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 50px 6%;
+    }
+    .eyebrow {
+      color: var(--taupe);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+    h2 {
+      font-size: clamp(42px, 7vw, 65px);
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .intro { line-height: 1.8; max-width: 550px; }
+    .panel {
+      background: var(--beige);
+      padding: 28px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4c7b9;
+      background: var(--white);
+      color: var(--brown);
+      font: inherit;
+    }
+    textarea { min-height: 85px; resize: vertical; }
+    button {
+      margin-top: 18px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      background: var(--brown);
+      color: var(--white);
+      font: inherit;
+      cursor: pointer;
+    }
+    .event-item {
+      background: var(--white);
+      padding: 18px;
+      margin-top: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .event-item strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+    }
+    .event-item button {
+      margin-top: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--taupe);
+      padding-bottom: 5px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--beige);
+      padding: 25px;
+      text-align: center;
+      color: var(--taupe);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MoveDance</h1>
+      <p>Studio Hub</p>
+    </div>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">03 / Dates and details</p>
+    <h2>Competition Planner</h2>
+    <p class="intro">Keep track of upcoming dance competitions, important dates, locations, and notes.</p>
+
+    <section class="panel">
+      <h3>Add a Competition</h3>
+      <form id="competitionForm">
+        <label for="eventName">Competition name</label>
+        <input id="eventName" placeholder="Example: Spring Dance Classic" required>
+
+        <label for="eventDate">Competition date</label>
+        <input id="eventDate" type="date" required>
+
+        <label for="eventLocation">Location</label>
+        <input id="eventLocation" placeholder="City or venue">
+
+        <label for="eventNotes">Notes</label>
+        <textarea id="eventNotes" placeholder="Add arrival details, routines, or reminders..."></textarea>
+
+        <button type="submit">Save Competition</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Upcoming Competitions</h3>
+      <div id="competitionList">
+        <p>No competitions added yet. Your events will appear here.</p>
+      </div>
+    </section>
+
+    <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <footer>MoveDance Studio Hub · Made for the love of dance</footer>
+
+  <script>
+    const form = document.getElementById("competitionForm");
+    const competitionList = document.getElementById("competitionList");
+    let competitions = JSON.parse(localStorage.getItem("moveDanceCompetitions") || "[]");
+
+    function displayCompetitions() {
+      competitionList.innerHTML = "";
+
+      if (competitions.length === 0) {
+        competitionList.innerHTML = "<p>No competitions added yet. Your events will appear here.</p>";
+        return;
+      }
+
+      competitions.sort((a, b) => a.date.localeCompare(b.date));
+
+      competitions.forEach((event, index) => {
+        const card = document.createElement("div");
+        card.className = "event-item";
+
+        const title = document.createElement("strong");
+        title.textContent = event.name;
+
+        const details = document.createElement("p");
+        details.textContent = "Date: " + event.date +
+          (event.location ? " · Location: " + event.location : "");
+
+        const notes = document.createElement("p");
+        notes.textContent = event.notes || "No notes added.";
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => {
+          const originalIndex = competitions.indexOf(event);
+          competitions.splice(originalIndex, 1);
+          saveCompetitions();
+        });
+
+        card.append(title, details, notes, remove);
+        competitionList.appendChild(card);
+      });
+    }
+
+    function saveCompetitions() {
+      localStorage.setItem("moveDanceCompetitions", JSON.stringify(competitions));
+      displayCompetitions();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      competitions.push({
+        name: document.getElementById("eventName").value.trim(),
+        date: document.getElementById("eventDate").value,
+        location: document.getElementById("eventLocation").value.trim(),
+        notes: document.getElementById("eventNotes").value.trim()
+      });
+
+      saveCompetitions();
+      form.reset();
+    });
+
+    displayCompetitions();
+  </script>
+</body>
+</html>
