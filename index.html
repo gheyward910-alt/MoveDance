@@ -151,8 +151,9 @@
 
       <article class="card">
         <h3>💬 Studio Announcements</h3>
-        <p>A future space for studio updates and parent announcements.</p>
-        <p><em>Your studio announcements will appear here.</em></p>
+<input type="text" id="announcement" placeholder="Write a studio announcement">
+<button onclick="addAnnouncement()">Post Announcement</button>
+<ul id="announcementList"></ul>        <p><em>Your studio announcements will appear here.</em></p>
       </article>
     </section>
 
@@ -282,7 +283,23 @@ function addAttendance() {  const name = document.getElementById("dancerName").v
   document.getElementById("attendanceList").appendChild(item);
 
   document.getElementById("dancerName").value = "";
-  document.getElementById("attendanceDate").value = "";
+document.getElementById("attendanceDate").value = "";
+}
+
+function addAnnouncement() {
+  const field = document.getElementById("announcement");
+  const value = field.value.trim();
+
+  if (!value) {
+    alert("Please write an announcement first.");
+    return;
+  }
+
+  const item = document.createElement("li");
+  item.textContent = value;
+
+  document.getElementById("announcementList").appendChild(item);
+  field.value = "";
 }
 </script>
 
