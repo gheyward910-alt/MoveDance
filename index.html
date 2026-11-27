@@ -266,8 +266,9 @@
   document.getElementById("packingList").appendChild(item);
 
   field.value = "";
-}function addAttendance() {
-  const name = document.getElementById("dancerName").value.trim();
+}
+
+function addAttendance() {  const name = document.getElementById("dancerName").value.trim();
   const date = document.getElementById("attendanceDate").value;
 
   if (!name || !date) {
